@@ -48,3 +48,27 @@ For complete examples, please view our tests: src/test/java/com/gr/cronparser/Cr
 
                         description = descriptor.getDescription("0 23 ? * MON-FRI");
                         //description will be: "At 11:00:00 PM, Monday through Friday"
+
+***New API***
+
+    //define your own parser: arbitrary fields are allowed and last field can be optional
+    CronParser parser = ParserDefinitionBuilder.defineParser()
+                    .withSeconds()
+                    .withMinutes()
+                    .withHours()
+                    .withDayOfMonth()
+                    .withMonth()
+                    .withDayOfWeek()
+                    .withYear()
+                    .andLastFieldOptional()
+                    .instance();
+
+    //or get a predefined instance
+    parser = CronParserRegistry.instance().retrieveParser(QUARTZ);
+
+    //create a descriptor for a specific Locale
+    CronDescriptor descriptor = CronDescriptor.instance(Locale.UK);
+
+    //parse some expression and ask descriptor for description
+    descriptor.describe(parser.parse("*/45 * * * * *"));
+    //description will be: "Every 45 seconds"

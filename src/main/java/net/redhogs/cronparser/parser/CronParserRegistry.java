@@ -10,9 +10,9 @@ public class CronParserRegistry {
 
     private CronParserRegistry(){
         registry = new HashMap<CronType, CronParser>();
-        registry.put(CronType.CRON4J, cron4jParser());
-        registry.put(CronType.QUARTZ, quartzParser());
-        registry.put(CronType.UNIX, unixCrontabParser());
+        register(CronType.CRON4J, cron4jParser());
+        register(CronType.QUARTZ, quartzParser());
+        register(CronType.UNIX, unixCrontabParser());
     }
 
     private CronParser cron4jParser(){
